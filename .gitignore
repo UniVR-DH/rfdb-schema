@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Python (validation tooling, if any is added later)
+.venv/
+__pycache__/
+*.pyc
+
+# Scratch / local-only
+.temp/
+*.local.ttl
+
+# Agent instructions (local-only, not part of the public repo)
+AGENTS.md
+CLAUDE.md
+.agent-defs/
