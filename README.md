@@ -10,6 +10,7 @@ This repository is the single source of truth for the shared schema and vocabula
 - `data/vocab.ttl` — shared controlled vocabulary/terms used by the schema.
 - `data/examples/data.ttl` — optional example data illustrating the model (a musical work, its libretto expressions and editions, performance, agents, roles, and sources). Consumers may skip this file entirely — it is not required for validation against the schema.
 - `docs/data-model.md` — modeling principles and design decisions behind the schema: vocabularies used and for what, WEMI layering and link direction, the Agent Role bridge pattern, and the literal/language/date/IRI policies.
+- `.external/` — snapshotted copies of the external vocabularies the schema references, stored via [Git LFS](#external-vocabularies). Reference-only; not validated.
 - `CHANGELOG.md` — release history and SemVer rationale per version.
 
 ## Data Model
@@ -42,6 +43,21 @@ Shapes with a `sh:property` on `rdfs:label` are standalone entities with their o
 
 > Modeling principles and design decisions — the vocabularies used and for what, WEMI layering and link direction, the Agent Role bridge pattern, and the literal/language/date/IRI policies — are in [docs/data-model.md](docs/data-model.md). Per-shape fields and cardinalities live in the schema itself (`schema/schema.ttl`).
 
+## External Vocabularies
+
+`.external/` holds point-in-time snapshots of the external ontologies and vocabularies the schema references, kept for offline lookup and reference — not for validation:
+
+| File | Vocabulary |
+|---|---|
+| `.external/lrmoo.ttl` | [LRMoo](https://cidoc-crm.org/lrmoo/) |
+| `.external/cidoc.ttl` | [CIDOC CRM](https://cidoc-crm.org/) |
+| `.external/core.ttl` | [Polifonia Core](https://github.com/polifonia-project/core-ontology) |
+| `.external/mm.ttl` | [Polifonia Music Meta](https://github.com/polifonia-project/music-meta-ontology) |
+| `.external/source.ttl` | [Polifonia Source](https://github.com/polifonia-project/source-ontology) |
+| `.external/glottolog_language.ttl` | [Glottolog](https://glottolog.org/) language vocabulary |
+
+These are stored via [Git LFS](https://git-lfs.com/) — `glottolog_language.ttl` alone is tens of megabytes. [git-lfs](https://git-lfs.com/) must be installed for `git clone`/`git pull` to fetch the actual content; without it you get small LFS pointer files instead. They are excluded from pre-commit/CI validation (see `.pre-commit-config.yaml`'s top-level `exclude`) and are not required to consume or validate against `schema/schema.ttl` — the canonical, up-to-date version of each vocabulary is at the linked URL above.
+
 ## Versioning
 
 Releases are tagged `vX.Y.Z` following SemVer:
@@ -65,6 +81,8 @@ cp /tmp/rfdb-schema/data/examples/data.ttl path/to/your/examples/data.ttl
 ```
 
 Integrity is guaranteed by git's own content hashing of the tag — no separate checksum files are published.
+
+Consumers only need `schema/`, `data/vocab.ttl`, and optionally `data/examples/data.ttl` — none of which are LFS-tracked. `.external/` is reference-only and safe to skip; set `GIT_LFS_SKIP_SMUDGE=1` before cloning to avoid fetching its LFS content entirely.
 
 ## Development
 
