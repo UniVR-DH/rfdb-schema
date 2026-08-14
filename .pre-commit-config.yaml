@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  - repo: local
+    hooks:
+      - id: ttl-syntax
+        name: Validate Turtle syntax
+        entry: uv run --with-requirements scripts/requirements.txt scripts/validate_ttl.py
+        language: system
+        files: \.ttl$
+
+      - id: shacl-validate
+        name: Validate SHACL schema and example data conformance
+        entry: uv run --with-requirements scripts/requirements.txt scripts/validate_shacl.py
+        language: system
+        files: ^(schema/schema\.ttl|data/vocab\.ttl|data/examples/data\.ttl)$
+        pass_filenames: false
