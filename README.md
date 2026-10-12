@@ -88,11 +88,23 @@ Consumers only need `schema/`, `data/vocab.ttl`, and optionally `data/examples/d
 
 Changes are validated with [pre-commit](https://pre-commit.com/) via [uv](https://docs.astral.sh/uv/): Turtle syntax for every `.ttl` file, SHACL self-consistency of `schema/schema.ttl`, and conformance of `data/examples/data.ttl` against the schema (loaded together with `data/vocab.ttl`). The same checks run in CI on every push and pull request (`.github/workflows/ci.yml`).
 
-To enable the checks locally:
+To enable the checks locally, install pre-commit as a uv tool, then install the git hook in your clone:
 
 ```bash
-uvx pre-commit install
+uv tool install pre-commit
+pre-commit install
 ```
+
+Install it as a tool rather than through `uvx pre-commit install`: the hook that command writes points into uv's cache, and once the cache is cleaned every commit fails with "`pre-commit` not found".
+
+Check the setup in each new clone. Both commands must succeed:
+
+```bash
+pre-commit --version
+ls "$(git rev-parse --git-path hooks)/pre-commit"
+```
+
+If either fails, your commits are not validated locally, and errors only surface in CI after you push.
 
 To run them on demand without installing the git hook:
 
