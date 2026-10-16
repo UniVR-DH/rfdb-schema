@@ -66,6 +66,13 @@ Releases are tagged `vX.Y.Z` following SemVer:
 - **MINOR** — backward-compatible additions (new optional properties/classes, non-breaking vocabulary expansion).
 - **PATCH** — corrections and non-breaking maintenance (typos, docs, examples, metadata).
 
+`schema/schema.ttl` carries its own version and prefix map as data, on the `owl:Ontology` node `rfdbs:` right after the `@prefix` block, so a tool that loads the graph can read both without the Turtle directives. Two conventions keep them accurate:
+
+- Every release bumps `owl:versionInfo` to the release's version, and the release is tagged with the same value (`"1.2.3"` is tagged `v1.2.3`).
+- Every new `@prefix` line gets a matching `sh:declare` with the same namespace, and a removed one loses it.
+
+`scripts/validate_shacl.py` fails if the `sh:declare` set differs from the `@prefix` lines or if there is not exactly one `owl:versionInfo`.
+
 Each tag is an immutable, content-addressed snapshot of the full tree (schema, vocabulary, and examples together) — there is no separate release channel for examples; consumers that don't want them simply don't copy that path.
 
 ## Consuming this repo
