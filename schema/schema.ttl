@@ -208,7 +208,15 @@ rfdbs:MusicalWorkShape
   sh:property [
     sh:path owl:sameAs ;
     sh:nodeKind sh:IRI ;
-    sh:description "External identifiers (e.g., Wikidata, VIAF, Corago ID)" ;
+    sh:description "External identifiers (e.g., Wikidata, Corago ID). A VIAF ID goes in wdt:P214, not here." ;
+  ] ;
+  sh:property [
+    sh:path wdt:P214 ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[1-9]([0-9]{1,8}|[0-9]{18,21})$" ;
+    sh:description "VIAF cluster ID (Wikidata P214) of the work, stored as Wikidata stores it: the bare ID text, e.g. \"293925180\". The VIAF IRI is http://viaf.org/viaf/ followed by the ID, the formatter URI for RDF resource (P1921) Wikidata declares for P214." ;
   ] ;
   sh:property [
     sh:path cidoc:P129_is_about ;
@@ -271,6 +279,14 @@ rfdbs:ExpressionShape
     sh:class core:AgentRole ;
     sh:node rfdbs:AgentRoleShape ;
     sh:description "Agent roles for the expression: librettist (original/translator), arranger, etc." ;
+  ] ;
+  sh:property [
+    sh:path wdt:P214 ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[1-9]([0-9]{1,8}|[0-9]{18,21})$" ;
+    sh:description "VIAF cluster ID (Wikidata P214) of the expression, e.g. a translation, stored as Wikidata stores it: the bare ID text, e.g. \"308534901\". The VIAF IRI is http://viaf.org/viaf/ followed by the ID, the formatter URI for RDF resource (P1921) Wikidata declares for P214." ;
   ] ;
   sh:property [
     sh:path rdfs:comment ;
@@ -546,8 +562,9 @@ rfdbs:PersonShape
     sh:path wdt:P214 ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
-    sh:nodeKind sh:IRI ;
-    sh:description "VIAF link (Wikidata P214)" ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[1-9]([0-9]{1,8}|[0-9]{18,21})$" ;
+    sh:description "VIAF cluster ID (Wikidata P214), stored as Wikidata stores it: the bare ID text, e.g. \"100995617\". The VIAF IRI is http://viaf.org/viaf/ followed by the ID, the formatter URI for RDF resource (P1921) Wikidata declares for P214." ;
   ] .
 
 # ================================
@@ -642,8 +659,9 @@ rfdbs:HoldingOrganizationShape
     sh:path wdt:P214 ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
-    sh:nodeKind sh:IRI ;
-    sh:description "VIAF link (Wikidata P214)" ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[1-9]([0-9]{1,8}|[0-9]{18,21})$" ;
+    sh:description "VIAF cluster ID (Wikidata P214), stored as Wikidata stores it: the bare ID text, e.g. \"100995617\". The VIAF IRI is http://viaf.org/viaf/ followed by the ID, the formatter URI for RDF resource (P1921) Wikidata declares for P214." ;
   ] ;
   sh:property [
     sh:path core:hasPlace ;
