@@ -3,6 +3,12 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
+## [2.1.0] - 2026-10-16
+
+MINOR: a relaxed constraint only, so data valid under 2.0.0 still validates.
+
+- `core:text` (title-page transcription) on `rfdbs:SourceShape` may be repeated and no longer requires a language tag: it accepts `rdf:langString` or `xsd:string`, as `rdfs:label` does.
+
 ## [2.0.0] - 2026-10-16
 
 MAJOR: a VIAF ID stored as a link on a Person or Holding Organization no longer validates.
