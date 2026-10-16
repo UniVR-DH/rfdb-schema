@@ -3,6 +3,13 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
+## [1.0.2] - 2026-10-16
+
+PATCH: metadata only. No shape or constraint changes, so data valid under 1.0.1 still validates.
+
+- `schema/schema.ttl` declares its own version and prefix map as data: an `owl:Ontology` node `rfdbs:` with `owl:versionInfo` and one `sh:declare` per `@prefix` line.
+- `scripts/validate_shacl.py` checks that the `sh:declare` set matches the `@prefix` lines and that exactly one `owl:versionInfo` is present.
+
 ## [1.0.1] - 2026-10-16
 
 - Added Italian `skos:altLabel`s to `rfdb:DocumentTypeScheme`, `rfdb:RoleTypeScheme` and `rfdb:Libretto` in `data/vocab.ttl`.
