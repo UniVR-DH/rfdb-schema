@@ -429,9 +429,11 @@ rfdbs:SourceShape
   sh:property [
     sh:path core:text ;
     sh:minCount 0 ;
-    sh:maxCount 1 ;
-    sh:datatype rdf:langString ;
-    sh:description "Fontespizio transcription (title-page text)" ;
+    sh:or (
+      [ sh:datatype rdf:langString ]
+      [ sh:datatype xsd:string ]
+    ) ;
+    sh:description "Fontespizio transcription (title-page text). May be repeated, e.g. one per title page; the language tag is optional." ;
   ] ;
 
   sh:property [
