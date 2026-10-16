@@ -18,6 +18,25 @@
 @prefix wdt:     <http://www.wikidata.org/prop/direct/> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 
+# Namespaces used by the integrated external vocabularies, beyond the ones
+# above. The shapes do not use them; they are declared so the prefix map
+# covers the integrated data too.
+# Polifonia Core, Music Meta and Source; Glottolog:
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+# Polifonia Music Meta and Source:
+@prefix cc:      <http://creativecommons.org/ns#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+# Glottolog:
+@prefix bibo:    <http://purl.org/ontology/bibo/> .
+@prefix dctype:  <http://purl.org/dc/dcmitype/> .
+@prefix frbr:    <http://purl.org/vocab/frbr/core#> .
+@prefix geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gold:    <http://purl.org/linguistics/gold/> .
+@prefix isbd:    <http://iflastandards.info/ns/isbd/elements/> .
+@prefix lexvo:   <http://lexvo.org/ontology#> .
+@prefix vcard:   <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix void:    <http://rdfs.org/ns/void#> .
+
 # The schema's own release and prefix map, kept as data so they survive
 # parsing. Every @prefix above has a matching sh:declare below, and
 # owl:versionInfo matches the vX.Y.Z tag of the release.
@@ -43,7 +62,22 @@ rfdbs:
     [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] ,
     [ sh:prefix "source" ; sh:namespace "https://w3id.org/polifonia/ontology/source/"^^xsd:anyURI ] ,
     [ sh:prefix "wdt" ; sh:namespace "http://www.wikidata.org/prop/direct/"^^xsd:anyURI ] ,
-    [ sh:prefix "xsd" ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] .
+    [ sh:prefix "xsd" ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] ,
+    # External vocabularies: Polifonia Core, Music Meta and Source; Glottolog.
+    [ sh:prefix "dc" ; sh:namespace "http://purl.org/dc/elements/1.1/"^^xsd:anyURI ] ,
+    # External vocabularies: Polifonia Music Meta and Source.
+    [ sh:prefix "cc" ; sh:namespace "http://creativecommons.org/ns#"^^xsd:anyURI ] ,
+    [ sh:prefix "vann" ; sh:namespace "http://purl.org/vocab/vann/"^^xsd:anyURI ] ,
+    # External vocabularies: Glottolog.
+    [ sh:prefix "bibo" ; sh:namespace "http://purl.org/ontology/bibo/"^^xsd:anyURI ] ,
+    [ sh:prefix "dctype" ; sh:namespace "http://purl.org/dc/dcmitype/"^^xsd:anyURI ] ,
+    [ sh:prefix "frbr" ; sh:namespace "http://purl.org/vocab/frbr/core#"^^xsd:anyURI ] ,
+    [ sh:prefix "geo" ; sh:namespace "http://www.w3.org/2003/01/geo/wgs84_pos#"^^xsd:anyURI ] ,
+    [ sh:prefix "gold" ; sh:namespace "http://purl.org/linguistics/gold/"^^xsd:anyURI ] ,
+    [ sh:prefix "isbd" ; sh:namespace "http://iflastandards.info/ns/isbd/elements/"^^xsd:anyURI ] ,
+    [ sh:prefix "lexvo" ; sh:namespace "http://lexvo.org/ontology#"^^xsd:anyURI ] ,
+    [ sh:prefix "vcard" ; sh:namespace "http://www.w3.org/2001/vcard-rdf/3.0#"^^xsd:anyURI ] ,
+    [ sh:prefix "void" ; sh:namespace "http://rdfs.org/ns/void#"^^xsd:anyURI ] .
 
 # ================================
 # Shape for Place
