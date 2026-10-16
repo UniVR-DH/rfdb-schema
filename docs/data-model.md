@@ -98,6 +98,26 @@ Some records are reference data to browse and select rather than author:
 
 ---
 
+## External authority links
+
+[VIAF](https://viaf.org/) clusters authority records for agents (persons and corporate
+bodies), for works, and for expressions such as translations. An expression cluster
+points to its work cluster with `schema:exampleOfWork`: for instance
+[*Arien und Gesänge aus Marquis Tulipano*](https://viaf.org/viaf/308534901), a German
+version (1811) of Paisiello's *Matrimonio inaspettato*, points to the work cluster
+[`293925180`](https://viaf.org/viaf/293925180). Both are typed `schema:CreativeWork`, so
+that link, not the type, tells the two levels apart. VIAF is an authority file, not a
+holdings catalogue: it issues no identifiers for manifestations (editions) or items
+(copies).
+
+A VIAF link therefore belongs only on records at those levels: Person, Holding
+Organization, Musical Work, Expression. Never attach one to a Manifestation or a Source.
+The ID goes in `wdt:P214` as bare text, the way Wikidata stores it, not as a link and not
+in `owl:sameAs`; the shapes describe how to build the VIAF IRI from it.
+Catalogue records for a specific copy go in the Source's `rdfs:seeAlso`.
+
+---
+
 ## Literal, language-tag, and date policies
 
 These are **principles any consuming application must honor**; the exact per-field

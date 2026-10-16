@@ -75,12 +75,12 @@ rfdb:Libretto_11d_item a source:Source, lrmoo:F5_Item ;
 rfdb:Person_1 a core:Person ;
     rdfs:label "Pallavicino, Stefano Benedetto"@en ;
     owl:sameAs wd:Q321084 ;
-    wdt:P214 <https://viaf.org/viaf/44588699> .
+    wdt:P214 "44588699" .
 
 rfdb:Person_3 a core:Person ;
     rdfs:label "Metastasio, Pietro"@en ;
     owl:sameAs wd:Q29473 ;
-    wdt:P214 <https://viaf.org/viaf/64192672> .
+    wdt:P214 "64192672" .
 
 rfdb:Place_P2 a core:Place ;
     rdfs:label "Milano"@en ;
@@ -109,7 +109,7 @@ rfdb:Person_2 a core:Person ;
 
 rfdb:Person_4 a core:Person ;
     rdfs:label "Araja, Francesco"@en ;
-    wdt:P214 <https://viaf.org/viaf/100995617> .
+    wdt:P214 "100995617" .
 
 rfdb:Place_P1 a core:Place ;
     rdfs:label "San Pietroburgo"@en ;

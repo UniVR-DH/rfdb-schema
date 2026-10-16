@@ -3,6 +3,14 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
+## [2.0.0] - 2026-10-16
+
+MAJOR: a VIAF ID stored as a link on a Person or Holding Organization no longer validates.
+
+- `wdt:P214` (VIAF) holds the bare ID text, as Wikidata stores it for an external identifier, e.g. `"100995617"` rather than `<https://viaf.org/viaf/100995617>`. It is `xsd:string` and must match Wikidata's VIAF ID format. Migrate existing values by keeping only the digits. The shape descriptions give the rule for building the link: `http://viaf.org/viaf/` followed by the ID.
+- `rfdbs:MusicalWorkShape` and `rfdbs:ExpressionShape` gain the same optional `wdt:P214`, since VIAF clusters works and expressions too. VIAF no longer goes in a Work's `owl:sameAs`.
+- `docs/data-model.md` gains an "External authority links" section: VIAF identifies agents, works and expressions, never manifestations or items.
+
 ## [1.1.1] - 2026-10-16
 
 PATCH: metadata only. No shape or constraint changes, so data valid under 1.1.0 still validates.
