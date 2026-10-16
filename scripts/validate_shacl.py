@@ -6,7 +6,8 @@ Three checks:
 2. schema/schema.ttl declares its own metadata: exactly one owl:versionInfo
    on an owl:Ontology node, and one sh:declare per @prefix line with the
    same namespace. @prefix lines are lost on parsing, so they are read from
-   the file's text.
+   the file's text. SPARQL-style PREFIX lines are valid Turtle and count
+   too, but the schema uses @prefix, so each one prints a warning.
 3. data/examples/data.ttl conforms to schema/schema.ttl once loaded
    together with the shared vocabulary in data/vocab.ttl.
 
@@ -26,6 +27,7 @@ VOCAB = ROOT / "data" / "vocab.ttl"
 EXAMPLE = ROOT / "data" / "examples" / "data.ttl"
 
 PREFIX_LINE = re.compile(r"^[ \t]*@prefix\s+([\w-]*):\s*<([^>]*)>\s*\.", re.MULTILINE)
+SPARQL_PREFIX_LINE = re.compile(r"^[ \t]*PREFIX\s+([\w-]*):\s*<([^>]*)>", re.MULTILINE | re.IGNORECASE)
 
 
 def load_graph(*paths: Path) -> Graph:
@@ -45,7 +47,11 @@ def check_meta_shacl() -> bool:
 
 def check_schema_metadata() -> bool:
     print(f"--- Schema metadata ({SCHEMA.relative_to(ROOT)}) ---")
-    prefix_lines = PREFIX_LINE.findall(SCHEMA.read_text(encoding="utf-8"))
+    text = SCHEMA.read_text(encoding="utf-8")
+    sparql_prefix_lines = SPARQL_PREFIX_LINE.findall(text)
+    for p, ns in sparql_prefix_lines:
+        print(f"Warning: PREFIX {p}: <{ns}> uses the SPARQL form; write it as @prefix {p}: <{ns}> .")
+    prefix_lines = PREFIX_LINE.findall(text) + sparql_prefix_lines
     graph = load_graph(SCHEMA)
     ok = True
 
