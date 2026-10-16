@@ -18,6 +18,33 @@
 @prefix wdt:     <http://www.wikidata.org/prop/direct/> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 
+# The schema's own release and prefix map, kept as data so they survive
+# parsing. Every @prefix above has a matching sh:declare below, and
+# owl:versionInfo matches the vX.Y.Z tag of the release.
+rfdbs:
+  a owl:Ontology ;
+  owl:versionInfo "1.0.1" ;
+  sh:declare
+    [ sh:prefix "cidoc" ; sh:namespace "http://www.cidoc-crm.org/cidoc-crm/"^^xsd:anyURI ] ,
+    [ sh:prefix "core" ; sh:namespace "https://w3id.org/polifonia/ontology/core/"^^xsd:anyURI ] ,
+    [ sh:prefix "dcterms" ; sh:namespace "http://purl.org/dc/terms/"^^xsd:anyURI ] ,
+    [ sh:prefix "foaf" ; sh:namespace "http://xmlns.com/foaf/0.1/"^^xsd:anyURI ] ,
+    [ sh:prefix "glottolog" ; sh:namespace "http://glottolog.org/resource/languoid/id/"^^xsd:anyURI ] ,
+    [ sh:prefix "lrmoo" ; sh:namespace "http://iflastandards.info/ns/lrm/lrmoo/"^^xsd:anyURI ] ,
+    [ sh:prefix "mm" ; sh:namespace "https://w3id.org/polifonia/ontology/music-meta/"^^xsd:anyURI ] ,
+    [ sh:prefix "owl" ; sh:namespace "http://www.w3.org/2002/07/owl#"^^xsd:anyURI ] ,
+    [ sh:prefix "prism" ; sh:namespace "http://prismstandard.org/namespaces/basic/2.0/"^^xsd:anyURI ] ,
+    [ sh:prefix "rdf" ; sh:namespace "http://www.w3.org/1999/02/22-rdf-syntax-ns#"^^xsd:anyURI ] ,
+    [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] ,
+    [ sh:prefix "rfdb" ; sh:namespace "https://rosfeatr.eu/rdf/data/"^^xsd:anyURI ] ,
+    [ sh:prefix "rfdbs" ; sh:namespace "https://rosfeatr.eu/rdf/schema/"^^xsd:anyURI ] ,
+    [ sh:prefix "schema" ; sh:namespace "http://schema.org/"^^xsd:anyURI ] ,
+    [ sh:prefix "sh" ; sh:namespace "http://www.w3.org/ns/shacl#"^^xsd:anyURI ] ,
+    [ sh:prefix "skos" ; sh:namespace "http://www.w3.org/2004/02/skos/core#"^^xsd:anyURI ] ,
+    [ sh:prefix "source" ; sh:namespace "https://w3id.org/polifonia/ontology/source/"^^xsd:anyURI ] ,
+    [ sh:prefix "wdt" ; sh:namespace "http://www.wikidata.org/prop/direct/"^^xsd:anyURI ] ,
+    [ sh:prefix "xsd" ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] .
+
 # ================================
 # Shape for Place
 # ================================
