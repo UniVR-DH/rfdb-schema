@@ -3,6 +3,12 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
+## [1.1.0] - 2026-10-16
+
+MINOR: new prefix declarations only. No shape or constraint changes, so data valid under 1.0.2 still validates.
+
+- `schema/schema.ttl` declares the namespaces used by the integrated external vocabularies (Polifonia Core, Music Meta and Source; Glottolog): `dc`, `cc`, `vann`, `bibo`, `dctype`, `frbr`, `geo`, `gold`, `isbd`, `lexvo`, `vcard` and `void`, each as a `@prefix` line with a matching `sh:declare`.
+
 ## [1.0.2] - 2026-10-16
 
 PATCH: metadata only. No shape or constraint changes, so data valid under 1.0.1 still validates.
