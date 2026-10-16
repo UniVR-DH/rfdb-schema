@@ -25,7 +25,7 @@ SCHEMA = ROOT / "schema" / "schema.ttl"
 VOCAB = ROOT / "data" / "vocab.ttl"
 EXAMPLE = ROOT / "data" / "examples" / "data.ttl"
 
-PREFIX_LINE = re.compile(r"^@prefix\s+([\w-]*):\s*<([^>]*)>\s*\.", re.MULTILINE)
+PREFIX_LINE = re.compile(r"^[ \t]*@prefix\s+([\w-]*):\s*<([^>]*)>\s*\.", re.MULTILINE)
 
 
 def load_graph(*paths: Path) -> Graph:
