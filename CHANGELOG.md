@@ -3,6 +3,13 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
+## [1.1.1] - 2026-10-16
+
+PATCH: metadata only. No shape or constraint changes, so data valid under 1.1.0 still validates.
+
+- `schema/schema.ttl` declares `wd` (`http://www.wikidata.org/entity/`), used by `data/examples/data.ttl`, as a `@prefix` line with a matching `sh:declare`, so the prefix map covers the data files too.
+- `scripts/validate_shacl.py` checks that every prefix of every Turtle file under `data/` appears in `sh:declare` with the same namespace. The pre-commit hook now runs on any `.ttl` file under `data/`.
+
 ## [1.1.0] - 2026-10-16
 
 MINOR: new prefix declarations only. No shape or constraint changes, so data valid under 1.0.2 still validates.

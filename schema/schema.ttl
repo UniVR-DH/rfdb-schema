@@ -37,12 +37,18 @@
 @prefix vcard:   <http://www.w3.org/2001/vcard-rdf/3.0#> .
 @prefix void:    <http://rdfs.org/ns/void#> .
 
+# Namespaces used by the data files under data/, beyond the ones above. The
+# shapes do not use them; they are declared so the prefix map covers the
+# repository's data too.
+# data/examples/data.ttl:
+@prefix wd:      <http://www.wikidata.org/entity/> .
+
 # The schema's own release and prefix map, kept as data so they survive
 # parsing. Every @prefix above has a matching sh:declare below, and
 # owl:versionInfo matches the vX.Y.Z tag of the release.
 rfdbs:
   a owl:Ontology ;
-  owl:versionInfo "1.1.0" ;
+  owl:versionInfo "1.1.1" ;
   sh:declare
     [ sh:prefix "cidoc" ; sh:namespace "http://www.cidoc-crm.org/cidoc-crm/"^^xsd:anyURI ] ,
     [ sh:prefix "core" ; sh:namespace "https://w3id.org/polifonia/ontology/core/"^^xsd:anyURI ] ,
@@ -77,7 +83,9 @@ rfdbs:
     [ sh:prefix "isbd" ; sh:namespace "http://iflastandards.info/ns/isbd/elements/"^^xsd:anyURI ] ,
     [ sh:prefix "lexvo" ; sh:namespace "http://lexvo.org/ontology#"^^xsd:anyURI ] ,
     [ sh:prefix "vcard" ; sh:namespace "http://www.w3.org/2001/vcard-rdf/3.0#"^^xsd:anyURI ] ,
-    [ sh:prefix "void" ; sh:namespace "http://rdfs.org/ns/void#"^^xsd:anyURI ] .
+    [ sh:prefix "void" ; sh:namespace "http://rdfs.org/ns/void#"^^xsd:anyURI ] ,
+    # Data files: data/examples/data.ttl.
+    [ sh:prefix "wd" ; sh:namespace "http://www.wikidata.org/entity/"^^xsd:anyURI ] .
 
 # ================================
 # Shape for Place

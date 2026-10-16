@@ -23,5 +23,5 @@ repos:
         name: Validate SHACL schema and example data conformance
         entry: uv run --with-requirements scripts/requirements.txt scripts/validate_shacl.py
         language: system
-        files: ^(schema/schema\.ttl|data/vocab\.ttl|data/examples/data\.ttl)$
+        files: ^(schema/schema\.ttl|data/.*\.ttl)$
         pass_filenames: false

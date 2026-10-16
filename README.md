@@ -70,8 +70,9 @@ Releases are tagged `vX.Y.Z` following SemVer:
 
 - Every release bumps `owl:versionInfo` to the release's version, and the release is tagged with the same value (`"1.2.3"` is tagged `v1.2.3`).
 - Every new `@prefix` line gets a matching `sh:declare` with the same namespace, and a removed one loses it.
+- The map covers the data files too: a prefix used by a Turtle file under `data/` gets an `@prefix` line and a `sh:declare` in the schema, with the same namespace.
 
-`scripts/validate_shacl.py` fails if the `sh:declare` set differs from the `@prefix` lines or if there is not exactly one `owl:versionInfo`.
+`scripts/validate_shacl.py` fails if the `sh:declare` set differs from the schema's `@prefix` lines, if a prefix of a Turtle file under `data/` is missing from `sh:declare` or declared with another namespace, or if there is not exactly one `owl:versionInfo`.
 
 Each tag is an immutable, content-addressed snapshot of the full tree (schema, vocabulary, and examples together) — there is no separate release channel for examples; consumers that don't want them simply don't copy that path.
 

@@ -8,6 +8,8 @@ Three checks:
    same namespace. @prefix lines are lost on parsing, so they are read from
    the file's text. SPARQL-style PREFIX lines are valid Turtle and count
    too, but the schema uses @prefix, so each one prints a warning.
+   Every prefix of every Turtle file under data/ must also be declared
+   there with the same namespace, so the map covers the data too.
 3. data/examples/data.ttl conforms to schema/schema.ttl once loaded
    together with the shared vocabulary in data/vocab.ttl.
 
@@ -23,8 +25,9 @@ from rdflib import Graph
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = ROOT / "schema" / "schema.ttl"
-VOCAB = ROOT / "data" / "vocab.ttl"
-EXAMPLE = ROOT / "data" / "examples" / "data.ttl"
+DATA = ROOT / "data"
+VOCAB = DATA / "vocab.ttl"
+EXAMPLE = DATA / "examples" / "data.ttl"
 
 PREFIX_LINE = re.compile(r"^[ \t]*@prefix\s+([\w-]*):\s*<([^>]*)>\s*\.", re.MULTILINE)
 SPARQL_PREFIX_LINE = re.compile(r"^[ \t]*PREFIX\s+([\w-]*):\s*<([^>]*)>", re.MULTILINE | re.IGNORECASE)
@@ -80,8 +83,23 @@ def check_schema_metadata() -> bool:
             print(f"sh:declare {p} <{ns}> has no matching @prefix line")
         ok = False
 
+    declared_map = dict(declared)
+    data_files = sorted(DATA.rglob("*.ttl"))
+    for path in data_files:
+        text = path.read_text(encoding="utf-8")
+        for p, ns in PREFIX_LINE.findall(text) + SPARQL_PREFIX_LINE.findall(text):
+            if p not in declared_map:
+                print(f"{path.relative_to(ROOT)}: prefix {p}: <{ns}> has no matching sh:declare")
+                ok = False
+            elif declared_map[p] != ns:
+                print(f"{path.relative_to(ROOT)}: prefix {p}: <{ns}> is declared as <{declared_map[p]}>")
+                ok = False
+
     if ok:
-        print(f"OK: version {versions[0][0]}, {len(declared)} prefixes declared")
+        print(
+            f"OK: version {versions[0][0]}, {len(declared)} prefixes declared, "
+            f"covering {len(data_files)} data files"
+        )
     return ok
 
 
