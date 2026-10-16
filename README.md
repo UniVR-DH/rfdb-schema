@@ -7,7 +7,7 @@ This repository is the single source of truth for the shared schema and vocabula
 ## Contents
 
 - `schema/schema.ttl` — SHACL shapes constraining the data model (LRMoo + CIDOC-CRM alignment).
-- `data/vocab.ttl` — shared controlled vocabulary/terms used by the schema.
+- `data/vocab.ttl` — shared controlled vocabulary/terms used by the schema. Concepts are defined only in `data/vocab.ttl`: the example data refers to them by IRI and never redefines them.
 - `data/examples/data.ttl` — optional example data illustrating the model (a musical work, its libretto expressions and editions, performance, agents, roles, and sources). Consumers may skip this file entirely — it is not required for validation against the schema.
 - `docs/data-model.md` — modeling principles and design decisions behind the schema: vocabularies used and for what, WEMI layering and link direction, the Agent Role bridge pattern, and the literal/language/date/IRI policies.
 - `.external/` — snapshotted copies of the external vocabularies the schema references, stored via [Git LFS](#external-vocabularies). Reference-only; not validated.

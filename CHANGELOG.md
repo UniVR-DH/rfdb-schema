@@ -26,6 +26,7 @@ PATCH: metadata only. No shape or constraint changes, so data valid under 1.0.1 
 ## [1.0.1] - 2026-10-16
 
 - Added Italian `skos:altLabel`s to `rfdb:DocumentTypeScheme`, `rfdb:RoleTypeScheme` and `rfdb:Libretto` in `data/vocab.ttl`.
+- Removed stray redeclarations of `rfdb:Librettista`, `rfdb:Compositore`, `rfdb:Traduttore`, `rfdb:LibrettoManoscritto` and `rfdb:LibrettoStampa` from `data/examples/data.ttl`. They duplicated `data/vocab.ttl` with conflicting labels, so the two files loaded together failed SHACL validation (`sh:maxCount 1` on `rdfs:label`).
 - Added `docs/data-model.md`: modeling principles and design decisions (vocabularies used, WEMI layering, the bridge-node pattern, literal/language/date/IRI policies). The README gains a Data Model section and the list of main SHACL shapes.
 - Added pre-commit hooks and CI (`.pre-commit-config.yaml`, `.github/workflows/ci.yml`) that check Turtle syntax, the SHACL self-consistency of `schema/schema.ttl`, and the conformance of `data/examples/data.ttl` to the schema.
 - Added `.external/`: Git LFS snapshots of the external vocabularies the schema references (LRMoo, CIDOC CRM, Polifonia Core/Music Meta/Source, Glottolog), for reference only and excluded from validation.

@@ -4,7 +4,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 # Canonical controlled vocabulary for the editor seed stage.
-# NOTE: data/data.ttl is test-only fixture data and must not be treated as canonical seed.
+# NOTE: data/examples/data.ttl is test-only fixture data and must not be treated as canonical seed.
 
 rfdb:DocumentTypeScheme a skos:ConceptScheme ;
   rdfs:label "RFDB Document Types"@en ;
