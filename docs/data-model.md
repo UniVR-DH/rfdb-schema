@@ -1,9 +1,14 @@
-# rfdb Schema — Data Model
+# rfdb Schema: Data Model
 
 This document records the **design principles and modeling decisions** behind the rfdb
 schema: which vocabularies are used and for what, how the WEMI layering and the bridge-node
-pattern work, and the literal/language/date/IRI policies that the SHACL shapes alone cannot
-explain.
+pattern work, and which modeling choices are deliberate. Two companion documents cover the
+rest:
+
+- [External identifiers](external-identifiers.md): VIAF and RISM IDs, where each belongs,
+  and how links are built from them.
+- [Rules for consuming applications](application-rules.md): typing, literal, language,
+  date, IRI and naming policies any application must honor.
 
 The schema at [`schema/schema.ttl`](../schema/schema.ttl) is the single source of truth for
 record types, fields, cardinalities, datatypes, and relations. This document explains the
@@ -31,7 +36,7 @@ column is the durable contract, not an exhaustive property list.
 | `schema:` | [Schema.org](https://schema.org/) | Digital-copy (PDF scan) metadata: filename, MIME type, download URL, byte size, checksum, page count. |
 | `glottolog:` | [Glottolog](https://glottolog.org/) | Stable language-identifier IRIs seeded as the Language controlled vocabulary. |
 | `skos:` | [SKOS](https://www.w3.org/TR/skos-reference/) | Alternate and preferred labels. |
-| `owl:` / `wdt:` / `rdfs:` | OWL / [Wikidata](https://www.wikidata.org/) direct props / RDFS | External authority links (`owl:sameAs`, `wdt:P214` VIAF), `rdfs:seeAlso` references, and core `rdfs:label`/`rdfs:comment` annotations. |
+| `owl:` / `wdt:` / `rdfs:` | OWL / [Wikidata](https://www.wikidata.org/) direct props / RDFS | External authority links (`owl:sameAs`; `wdt:P214` VIAF and `wdt:P5504` RISM, see [External identifiers](external-identifiers.md)), `rdfs:seeAlso` references, and core `rdfs:label`/`rdfs:comment` annotations. |
 | `rdf:` / `xsd:` / `sh:` | RDF / XSD / [SHACL](https://www.w3.org/TR/shacl12-core/) | Typing, datatypes, and the shape language itself. |
 
 ---
@@ -75,16 +80,6 @@ one person hold different roles across records without collapsing identity into 
 
 ---
 
-## Class-targeted validation requires explicit `@type`
-
-Shapes use `sh:targetClass`, so a shape's constraints only run against a node that
-declares the matching RDF class. **Payloads must therefore carry explicit `@type`
-values** — most importantly bridge nodes, which the schema validates by class (an
-`AgentRole` payload must include `core:AgentRole` in its `@type`). Omitting `@type` can
-silently skip constraints.
-
----
-
 ## Controlled vocabularies and reference data
 
 Some records are reference data to browse and select rather than author:
@@ -95,80 +90,6 @@ Some records are reference data to browse and select rather than author:
 - **Role** and **Source Type** are typically curated as small controlled sets
   (composer, librettist, translator; libretto, score, …), though the schema does not lock
   them by default.
-
----
-
-## External authority links
-
-[VIAF](https://viaf.org/) clusters authority records for agents (persons and corporate
-bodies), for works, and for expressions such as translations. An expression cluster
-points to its work cluster with `schema:exampleOfWork`: for instance
-[*Arien und Gesänge aus Marquis Tulipano*](https://viaf.org/en/viaf/308534901), a German
-version (1811) of Paisiello's *Matrimonio inaspettato*, points to the work cluster
-[`293925180`](https://viaf.org/en/viaf/293925180). Both are typed `schema:CreativeWork`, so
-that link, not the type, tells the two levels apart. VIAF is an authority file, not a
-holdings catalogue: it issues no identifiers for manifestations (editions) or items
-(copies).
-
-A VIAF link therefore belongs only on records at those levels: Person, Holding
-Organization, Musical Work, Expression. Never attach one to a Manifestation or a Source.
-The ID goes in `wdt:P214` as bare text, the way Wikidata stores it, not as a link and not
-in `owl:sameAs`; the shapes describe how to build the VIAF IRI from it.
-Catalogue records for a specific copy go in the Source's `rdfs:seeAlso`.
-
-[RISM](https://rism.online/) identifies people, institutions and sources, each ID being the
-record type and a number, e.g. `people/1874`. A RISM source record, print or manuscript,
-describes a manifestation and lists its exemplars beneath it, each exemplar with its own
-IRI: the 1736 print [`sources/990052516`](https://rism.online/sources/990052516) of
-favourite songs from *Orfeo* has exemplars in several libraries, among them
-[`sources/990052516/holdings/204680`](https://rism.online/sources/990052516/holdings/204680).
-The RISM ID therefore goes in `wdt:P5504`, again as Wikidata stores it, on Person, Holding
-Organization and Manifestation. An exemplar corresponds to a Source; its IRI goes in the
-Source's `rdfs:seeAlso`, because Wikidata's RISM ID does not cover exemplars. That is the
-only kind of RISM link a Source accepts.
-
-The schema stores these IDs only. Turning one into an IRI or a web address is left to the
-consuming application, and the schema does not restate the link templates as data.
-Wikidata defines them on the properties themselves, with `$1` standing for the ID:
-
-- [VIAF ID (P214)](https://www.wikidata.org/wiki/Property:P214): the IRI of the VIAF
-  record is its "formatter URI for RDF resource" (P1921), `http://viaf.org/viaf/$1`; the
-  web page is its "formatter URL" (P1630), `https://viaf.org/en/viaf/$1`.
-- [RISM ID (P5504)](https://www.wikidata.org/wiki/Property:P5504): use its "formatter URL"
-  (P1630), `https://rism.online/$1`, which is also the form of RISM's own record IRIs. Its
-  P1921 value names an RDF file on an obsolete domain.
-
-Where Wikidata changes these values, Wikidata wins.
-
----
-
-## Literal, language-tag, and date policies
-
-These are **principles any consuming application must honor**; the exact per-field
-datatype for any property lives in the schema.
-
-- **Literal kinds are distinguished, not flattened.** A field is one of: plain string,
-  language-tagged string (`rdf:langString`), full date, year-only date, year-month date,
-  or IRI. Consumers should render and validate each accordingly.
-- **Language tags are first-class.** Where a field is `rdf:langString`, the tag must be
-  entered, validated, and preserved through any export format — and, where the schema
-  sets `sh:uniqueLang true`, enforced as unique per language.
-- **Date precision is preserved.** The schema permits `xsd:date`, `xsd:gYear`, and
-  `xsd:gYearMonth`. A year-only value must **not** be silently promoted to a full date;
-  the recorded precision is the datum.
-
----
-
-## IRI policy
-
-Every persisted resource has a stable subject IRI in the `rfdb:` (data) or `rfdbs:`
-(shape) namespace. The rules:
-
-- existing IRIs are never silently changed;
-- new IRIs follow a consistent generation policy (helper/bridge IRIs are regular named
-  nodes, not blank nodes, so they survive updates);
-- both full and prefixed IRIs are accepted on input;
-- invalid IRIs are rejected before persistence.
 
 ---
 
@@ -194,32 +115,3 @@ away:
    contributor to `foaf:Person` or `foaf:Organization`. This is a schema-level guardrail
    keeping donor/provenance identities structurally separate from composers, librettists,
    and holding institutions.
-
----
-
-## Naming across layers
-
-Keep three naming levels distinct in code, UI, and docs — conflating them loses either
-readability or RDF precision:
-
-- **User-facing labels** — "Musical Work", "Source", "Holding Organization".
-- **SHACL shape names** — `rfdbs:MusicalWorkShape`, `rfdbs:SourceShape`.
-- **RDF classes and predicates** — `mm:MusicEntity`, `lrmoo:F2_Expression`,
-  `core:hasAgentRole`.
-
-Each property shape carries its field's user-facing label as `sh:name`, in English and
-Italian (e.g. "RISM ID" for `wdt:P5504`). Label form fields from it, not from the predicate.
-
----
-
-## Model alignment policy
-
-The model is SHACL-driven. Consequently, any consuming application should follow these
-conventions:
-
-- the schema in this repository is the single source of truth;
-- consumers make no hard-coded ontology assumptions beyond what the schema declares;
-- ontology-specific behavior stays isolated in schema-parsing and mapping code, not
-  scattered through application logic;
-- validation semantics in a consuming application stay consistent with the schema's
-  extracted shape metadata.

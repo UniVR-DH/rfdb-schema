@@ -9,7 +9,9 @@ This repository is the single source of truth for the shared schema and vocabula
 - `schema/schema.ttl` — SHACL shapes constraining the data model (LRMoo + CIDOC-CRM alignment).
 - `data/vocab.ttl` — shared controlled vocabulary/terms used by the schema. Concepts are defined only in `data/vocab.ttl`: the example data refers to them by IRI and never redefines them.
 - `data/examples/data.ttl` — optional example data illustrating the model (a musical work, its libretto expressions and editions, performance, agents, roles, and sources). Consumers may skip this file entirely — it is not required for validation against the schema.
-- `docs/data-model.md` — modeling principles and design decisions behind the schema: vocabularies used and for what, WEMI layering and link direction, the Agent Role bridge pattern, and the literal/language/date/IRI policies.
+- `docs/data-model.md` — modeling principles and design decisions behind the schema: vocabularies used and for what, WEMI layering and link direction, the Agent Role bridge pattern.
+- `docs/external-identifiers.md` — VIAF and RISM IDs: where each belongs and how links are built from them.
+- `docs/application-rules.md` — rules for consuming applications: typing, literal/language/date, IRI and naming policies.
 - `.external/` — snapshotted copies of the external vocabularies the schema references, stored via [Git LFS](#external-vocabularies). Reference-only; not validated.
 - `CHANGELOG.md` — release history and SemVer rationale per version.
 
@@ -41,7 +43,7 @@ The schema includes these primary record types:
 
 Shapes with a `sh:property` on `rdfs:label` are standalone entities with their own identity and lifecycle; shapes without one are helper/bridge nodes meant to be handled inline wherever a parent shape references them (e.g. `rfdbs:AgentRoleShape`).
 
-> Modeling principles and design decisions — the vocabularies used and for what, WEMI layering and link direction, the Agent Role bridge pattern, and the literal/language/date/IRI policies — are in [docs/data-model.md](docs/data-model.md). Per-shape fields and cardinalities live in the schema itself (`schema/schema.ttl`).
+> Modeling principles and design decisions are in [docs/data-model.md](docs/data-model.md), external identifiers (VIAF, RISM) in [docs/external-identifiers.md](docs/external-identifiers.md), and the rules for consuming applications in [docs/application-rules.md](docs/application-rules.md). Per-shape fields and cardinalities live in the schema itself (`schema/schema.ttl`).
 
 ## External Vocabularies
 
