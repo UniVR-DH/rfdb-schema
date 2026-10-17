@@ -127,6 +127,19 @@ Organization and Manifestation. An exemplar corresponds to a Source; its IRI goe
 Source's `rdfs:seeAlso`, because Wikidata's RISM ID does not cover exemplars. That is the
 only kind of RISM link a Source accepts.
 
+The schema stores these IDs only. Turning one into an IRI or a web address is left to the
+consuming application, and the schema does not restate the link templates as data.
+Wikidata defines them on the properties themselves, with `$1` standing for the ID:
+
+- [VIAF ID (P214)](https://www.wikidata.org/wiki/Property:P214): the IRI of the VIAF
+  record is its "formatter URI for RDF resource" (P1921), `http://viaf.org/viaf/$1`; the
+  web page is its "formatter URL" (P1630), `https://viaf.org/en/viaf/$1`.
+- [RISM ID (P5504)](https://www.wikidata.org/wiki/Property:P5504): use its "formatter URL"
+  (P1630), `https://rism.online/$1`, which is also the form of RISM's own record IRIs. Its
+  P1921 value names an RDF file on an obsolete domain.
+
+Where Wikidata changes these values, Wikidata wins.
+
 ---
 
 ## Literal, language-tag, and date policies
