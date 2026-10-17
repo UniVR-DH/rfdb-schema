@@ -194,6 +194,9 @@ readability or RDF precision:
 - **RDF classes and predicates** — `mm:MusicEntity`, `lrmoo:F2_Expression`,
   `core:hasAgentRole`.
 
+Each property shape carries its field's user-facing label as `sh:name`, in English and
+Italian (e.g. "RISM ID" for `wdt:P5504`). Label form fields from it, not from the predicate.
+
 ---
 
 ## Model alignment policy
