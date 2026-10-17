@@ -48,7 +48,8 @@ structure, each level more concrete than the one above:
 
 - **Musical Work** — the abstract work.
 - **Expression** — an intellectual realization (e.g. a libretto).
-- **Manifestation** — an edition or product type.
+- **Manifestation** — an edition or product type, or a unique manuscript (LRMoo: "a unique
+  form created directly on some material carrier").
 - **Source / Item** — a specific physical or documentary copy.
 
 **Design decision — links point child → parent.** Every WEMI link is asserted on the

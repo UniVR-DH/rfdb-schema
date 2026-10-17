@@ -9,6 +9,7 @@ PATCH: documentation only. No shape or constraint changes, so data valid under 2
 
 - The documentation states that building an IRI or web address from a VIAF or RISM ID is left to consuming applications, and how Wikidata defines the link templates for P214 and P5504. The schema does not restate them as data.
 - `docs/data-model.md` is split by topic: it keeps the model itself; `docs/external-identifiers.md` covers VIAF and RISM IDs; `docs/application-rules.md` covers the rules for consuming applications (typing, literal/language/date, IRI and naming policies).
+- README brought up to date: the consuming example pins `v2.2.2` from `UniVR-DH/rfdb-schema`; the release practice (every change released, tag pushes publish a GitHub Release, published tags never move) is described; CI triggers are stated correctly. The README and `docs/data-model.md` say a Manifestation can also be a unique manuscript.
 
 ## [2.2.1] - 2026-10-17
 

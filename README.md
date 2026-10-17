@@ -19,7 +19,7 @@ This repository is the single source of truth for the shared schema and vocabula
 
 The model uses [LRMoo](https://cidoc-crm.org/lrmoo/) (rather than the older FRBR/FaBiO model) and draws on [LRMoo](https://cidoc-crm.org/lrmoo/), [CIDOC CRM](https://cidoc-crm.org/), the Polifonia [Core](https://github.com/polifonia-project/core-ontology) / [Music Meta](https://github.com/polifonia-project/music-meta-ontology) / [Source](https://github.com/polifonia-project/source-ontology) ontologies, [Dublin Core Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/), [PRISM](https://www.w3.org/submissions/prism/), [SKOS](https://www.w3.org/TR/skos-reference/), [FOAF](http://xmlns.com/foaf/spec/), [Schema.org](https://schema.org/), [Wikidata](https://www.wikidata.org/) direct properties, and RDF/RDFS/OWL/XSD.
 
-LRMoo hierarchy: a **Musical Work** is the abstract work; an **Expression** is an intellectual realization (e.g. a libretto); a **Manifestation** is an edition or product type; a **Source / Item** is a specific physical or documentary copy. Each level refines the one above it, from Work through Expression and Manifestation to Source/Item, and every WEMI link points from the more concrete record up to its parent — so create parents before children.
+LRMoo hierarchy: a **Musical Work** is the abstract work; an **Expression** is an intellectual realization (e.g. a libretto); a **Manifestation** is an edition or product type, or a unique manuscript; a **Source / Item** is a specific physical or documentary copy. Each level refines the one above it, from Work through Expression and Manifestation to Source/Item, and every WEMI link points from the more concrete record up to its parent — so create parents before children.
 
 ### Main SHACL Shapes
 
@@ -68,13 +68,15 @@ Releases are tagged `vX.Y.Z` following SemVer:
 - **MINOR** — backward-compatible additions (new optional properties/classes, non-breaking vocabulary expansion).
 - **PATCH** — corrections and non-breaking maintenance (typos, docs, examples, metadata).
 
-`schema/schema.ttl` carries its own version and prefix map as data, on the `owl:Ontology` node `rfdbs:` right after the `@prefix` block, so a tool that loads the graph can read both without the Turtle directives. Two conventions keep them accurate:
+`schema/schema.ttl` carries its own version and prefix map as data, on the `owl:Ontology` node `rfdbs:` right after the `@prefix` block, so a tool that loads the graph can read both without the Turtle directives. Three conventions keep them accurate:
 
 - Every release bumps `owl:versionInfo` to the release's version, and the release is tagged with the same value (`"1.2.3"` is tagged `v1.2.3`).
 - Every new `@prefix` line gets a matching `sh:declare` with the same namespace, and a removed one loses it.
 - The map covers the data files too: a prefix used by a Turtle file under `data/` gets an `@prefix` line and a `sh:declare` in the schema, with the same namespace.
 
 `scripts/validate_shacl.py` fails if the `sh:declare` set differs from the schema's `@prefix` lines, if a prefix of a Turtle file under `data/` is missing from `sh:declare` or declared with another namespace, or if there is not exactly one `owl:versionInfo`.
+
+Every change is released: each version has its own section in `CHANGELOG.md`, and there is no unreleased section. Pushing a `vX.Y.Z` tag runs `.github/workflows/release.yml`, which validates the tree and publishes a GitHub Release with that version's changelog section as its notes. A published tag is never moved; a fix ships as the next version.
 
 Each tag is an immutable, content-addressed snapshot of the full tree (schema, vocabulary, and examples together) — there is no separate release channel for examples; consumers that don't want them simply don't copy that path.
 
@@ -83,7 +85,7 @@ Each tag is an immutable, content-addressed snapshot of the full tree (schema, v
 Pin a tag and sync only the files you need, e.g.:
 
 ```bash
-git clone --depth 1 --branch v0.1.1 https://github.com/<org>/rfdb-schema.git /tmp/rfdb-schema
+git clone --depth 1 --branch v2.2.2 https://github.com/UniVR-DH/rfdb-schema.git /tmp/rfdb-schema
 cp /tmp/rfdb-schema/schema/schema.ttl path/to/your/schema.ttl
 cp /tmp/rfdb-schema/data/vocab.ttl path/to/your/vocab.ttl
 # optional:
@@ -96,7 +98,7 @@ Consumers only need `schema/`, `data/vocab.ttl`, and optionally `data/examples/d
 
 ## Development
 
-Changes are validated with [pre-commit](https://pre-commit.com/) via [uv](https://docs.astral.sh/uv/): Turtle syntax for every `.ttl` file, SHACL self-consistency of `schema/schema.ttl`, and conformance of `data/examples/data.ttl` against the schema (loaded together with `data/vocab.ttl`). The same checks run in CI on every push and pull request (`.github/workflows/ci.yml`).
+Changes are validated with [pre-commit](https://pre-commit.com/) via [uv](https://docs.astral.sh/uv/): Turtle syntax for every `.ttl` file, SHACL self-consistency of `schema/schema.ttl`, and conformance of `data/examples/data.ttl` against the schema (loaded together with `data/vocab.ttl`). The same checks run in CI on every push to `main` and every pull request (`.github/workflows/ci.yml`).
 
 To enable the checks locally, install pre-commit as a uv tool, then install the git hook in your clone:
 
