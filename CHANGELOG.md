@@ -3,9 +3,12 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
-## [Unreleased]
+## [2.2.2] - 2026-10-17
 
-- `docs/data-model.md` states that building an IRI or web address from a VIAF or RISM ID is left to consuming applications, and how Wikidata defines the link templates for P214 and P5504. The schema does not restate them as data; no shape changes.
+PATCH: documentation only. No shape or constraint changes, so data valid under 2.2.1 still validates.
+
+- The documentation states that building an IRI or web address from a VIAF or RISM ID is left to consuming applications, and how Wikidata defines the link templates for P214 and P5504. The schema does not restate them as data.
+- `docs/data-model.md` is split by topic: it keeps the model itself; `docs/external-identifiers.md` covers VIAF and RISM IDs; `docs/application-rules.md` covers the rules for consuming applications (typing, literal/language/date, IRI and naming policies).
 
 ## [2.2.1] - 2026-10-17
 

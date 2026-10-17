@@ -48,7 +48,7 @@
 # owl:versionInfo matches the vX.Y.Z tag of the release.
 rfdbs:
   a owl:Ontology ;
-  owl:versionInfo "2.2.1" ;
+  owl:versionInfo "2.2.2" ;
   sh:declare
     [ sh:prefix "cidoc" ; sh:namespace "http://www.cidoc-crm.org/cidoc-crm/"^^xsd:anyURI ] ,
     [ sh:prefix "core" ; sh:namespace "https://w3id.org/polifonia/ontology/core/"^^xsd:anyURI ] ,
