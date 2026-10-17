@@ -340,6 +340,15 @@ rfdbs:ManifestationShape
     sh:maxCount 1 ;
     sh:datatype xsd:string ;
     sh:description "Optional description of the manifestation" ;
+  ] ;
+
+  sh:property [
+    sh:path wdt:P5504 ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^sources/[0-9]+$" ;
+    sh:description "RISM ID (Wikidata P5504) of the RISM source record describing this manifestation, print or manuscript, stored as Wikidata stores it: the record type and number, e.g. \"sources/990052516\". A RISM source record lists its exemplars beneath it; those correspond to Sources and go in the Source's rdfs:seeAlso. The RISM page is https://rism.online/ followed by the ID, the formatter URL (P1630) Wikidata declares for P5504." ;
   ] .
 
 
@@ -439,7 +448,14 @@ rfdbs:SourceShape
   sh:property [
     sh:path rdfs:seeAlso ;
     sh:nodeKind sh:IRI ;
-    sh:description "External references (Link): catalog links, etc." ;
+    # Any rism.online link here must be an exemplar (holding) in RISM's own
+    # form; other RISM records describe a different level.
+    sh:or (
+      [ sh:not [ sh:pattern "^https?://(www\\.)?rism\\.online/" ] ]
+      [ sh:pattern "^https://rism\\.online/sources/[0-9]+/holdings/[0-9]+$" ]
+    ) ;
+    sh:message "A RISM link on a Source must be the IRI of a RISM exemplar (holding), exactly https://rism.online/sources/<number>/holdings/<number>, e.g. https://rism.online/sources/990052516/holdings/204680 (https, no trailing slash). A RISM source ID belongs on the Manifestation as wdt:P5504 \"sources/<number>\"; a RISM person or institution belongs on that Person or Holding Organization record." ;
+    sh:description "External references (Link): catalog links, etc. A RISM exemplar of this copy goes here as its holding IRI, exactly https://rism.online/sources/<number>/holdings/<number>; any other rism.online link is rejected. The RISM source ID itself belongs on the Manifestation (wdt:P5504)." ;
   ] ;
 
   sh:property [
@@ -567,6 +583,14 @@ rfdbs:PersonShape
     sh:datatype xsd:string ;
     sh:pattern "^[1-9]([0-9]{1,8}|[0-9]{18,21})$" ;
     sh:description "VIAF cluster ID (Wikidata P214), stored as Wikidata stores it: the bare ID text, e.g. \"100995617\". The VIAF IRI is http://viaf.org/viaf/ followed by the ID, the formatter URI for RDF resource (P1921) Wikidata declares for P214." ;
+  ] ;
+  sh:property [
+    sh:path wdt:P5504 ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^people/[0-9]+$" ;
+    sh:description "RISM ID (Wikidata P5504), stored as Wikidata stores it: the record type and number, e.g. \"people/1874\". The RISM page is https://rism.online/ followed by the ID, the formatter URL (P1630) Wikidata declares for P5504." ;
   ] .
 
 # ================================
@@ -664,6 +688,14 @@ rfdbs:HoldingOrganizationShape
     sh:datatype xsd:string ;
     sh:pattern "^[1-9]([0-9]{1,8}|[0-9]{18,21})$" ;
     sh:description "VIAF cluster ID (Wikidata P214), stored as Wikidata stores it: the bare ID text, e.g. \"100995617\". The VIAF IRI is http://viaf.org/viaf/ followed by the ID, the formatter URI for RDF resource (P1921) Wikidata declares for P214." ;
+  ] ;
+  sh:property [
+    sh:path wdt:P5504 ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+    sh:pattern "^institutions/[0-9]+$" ;
+    sh:description "RISM ID (Wikidata P5504), stored as Wikidata stores it: the record type and number, e.g. \"institutions/30002520\". The RISM page is https://rism.online/ followed by the ID, the formatter URL (P1630) Wikidata declares for P5504." ;
   ] ;
   sh:property [
     sh:path core:hasPlace ;

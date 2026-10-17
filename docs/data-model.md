@@ -103,9 +103,9 @@ Some records are reference data to browse and select rather than author:
 [VIAF](https://viaf.org/) clusters authority records for agents (persons and corporate
 bodies), for works, and for expressions such as translations. An expression cluster
 points to its work cluster with `schema:exampleOfWork`: for instance
-[*Arien und Gesänge aus Marquis Tulipano*](https://viaf.org/viaf/308534901), a German
+[*Arien und Gesänge aus Marquis Tulipano*](https://viaf.org/en/viaf/308534901), a German
 version (1811) of Paisiello's *Matrimonio inaspettato*, points to the work cluster
-[`293925180`](https://viaf.org/viaf/293925180). Both are typed `schema:CreativeWork`, so
+[`293925180`](https://viaf.org/en/viaf/293925180). Both are typed `schema:CreativeWork`, so
 that link, not the type, tells the two levels apart. VIAF is an authority file, not a
 holdings catalogue: it issues no identifiers for manifestations (editions) or items
 (copies).
@@ -115,6 +115,17 @@ Organization, Musical Work, Expression. Never attach one to a Manifestation or a
 The ID goes in `wdt:P214` as bare text, the way Wikidata stores it, not as a link and not
 in `owl:sameAs`; the shapes describe how to build the VIAF IRI from it.
 Catalogue records for a specific copy go in the Source's `rdfs:seeAlso`.
+
+[RISM](https://rism.online/) identifies people, institutions and sources, each ID being the
+record type and a number, e.g. `people/1874`. A RISM source record, print or manuscript,
+describes a manifestation and lists its exemplars beneath it, each exemplar with its own
+IRI: the 1736 print [`sources/990052516`](https://rism.online/sources/990052516) of
+favourite songs from *Orfeo* has exemplars in several libraries, among them
+[`sources/990052516/holdings/204680`](https://rism.online/sources/990052516/holdings/204680).
+The RISM ID therefore goes in `wdt:P5504`, again as Wikidata stores it, on Person, Holding
+Organization and Manifestation. An exemplar corresponds to a Source; its IRI goes in the
+Source's `rdfs:seeAlso`, because Wikidata's RISM ID does not cover exemplars. That is the
+only kind of RISM link a Source accepts.
 
 ---
 

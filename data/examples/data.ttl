@@ -109,7 +109,8 @@ rfdb:Person_2 a core:Person ;
 
 rfdb:Person_4 a core:Person ;
     rdfs:label "Araja, Francesco"@en ;
-    wdt:P214 "100995617" .
+    wdt:P214 "100995617" ;
+    wdt:P5504 "people/30000135" .
 
 rfdb:Place_P1 a core:Place ;
     rdfs:label "San Pietroburgo"@en ;
