@@ -3,6 +3,13 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
+## [2.2.1] - 2026-10-17
+
+PATCH: labels only. No constraint changes, so data valid under 2.2.0 still validates.
+
+- Every property shape in `schema/schema.ttl` carries `sh:name` in English and Italian, the field's user-facing label, e.g. "RISM ID" / "Identificativo RISM" for `wdt:P5504`.
+- The digital-copies property shape on `rfdbs:SourceShape` drops its `rdfs:label` in favour of `sh:name`. An application that read field labels from `rdfs:label` should read `sh:name`.
+
 ## [2.2.0] - 2026-10-17
 
 MINOR: new optional properties, plus one tightened constraint released as MINOR by the owner's decision, because no existing data is affected.
