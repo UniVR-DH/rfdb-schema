@@ -3,6 +3,14 @@
 All notable changes to this repository are documented here.
 Versioning follows [SemVer](https://semver.org/): MAJOR for breaking schema changes, MINOR for backward-compatible additions, PATCH for non-breaking corrections.
 
+## [2.2.0] - 2026-10-17
+
+MINOR: new optional properties, plus one tightened constraint released as MINOR by the owner's decision, because no existing data is affected.
+
+- `wdt:P5504` (RISM ID) holds the ID as Wikidata stores it, the record type and number, one per record: `"people/<n>"` on `rfdbs:PersonShape`, `"institutions/<n>"` on `rfdbs:HoldingOrganizationShape`, `"sources/<n>"` on `rfdbs:ManifestationShape`. A RISM source record, print or manuscript, describes a manifestation.
+- Tightened: on `rfdbs:SourceShape`, a `rdfs:seeAlso` link to rism.online must be a RISM exemplar (holding) IRI, exactly `https://rism.online/sources/<n>/holdings/<n>`. Any other rism.online link fails, with a message saying where it belongs.
+- `docs/data-model.md` gains a RISM paragraph in "External authority links"; its VIAF example links use the formatter URL Wikidata declares for P214.
+
 ## [2.1.0] - 2026-10-16
 
 MINOR: a relaxed constraint only, so data valid under 2.0.0 still validates.
