@@ -85,7 +85,7 @@ Each tag is an immutable, content-addressed snapshot of the full tree (schema, v
 Pin a tag and sync only the files you need, e.g.:
 
 ```bash
-git clone --depth 1 --branch v2.2.2 https://github.com/UniVR-DH/rfdb-schema.git /tmp/rfdb-schema
+git clone --depth 1 --branch v2.2.2 https://github.com/VIASystemsLab/rfdb-schema.git /tmp/rfdb-schema
 cp /tmp/rfdb-schema/schema/schema.ttl path/to/your/schema.ttl
 cp /tmp/rfdb-schema/data/vocab.ttl path/to/your/vocab.ttl
 # optional:
